@@ -1,0 +1,649 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<title>Chester Job Search Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          navy: {
+            950: '#070f1a',
+            900: '#0b192c',
+            850: '#0f2238',
+            800: '#12364a',
+          },
+          teal: {
+            500: '#00adb5',
+            600: '#009097',
+            700: '#00696e',
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .card-lift {
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px -6px rgba(11, 25, 44, 0.09), 0 4px 10px -2px rgba(11, 25, 44, 0.04);
+  }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col selection:bg-teal-500 selection:text-white">
+<!-- Header Section -->
+<header class="relative overflow-hidden bg-navy-900 border-b border-navy-800/80 text-white pt-10 pb-12 sm:pt-14 sm:pb-16 shadow-lg">
+<!-- Subtle decorative ambient glows -->
+<div class="absolute -top-32 -left-20 w-96 h-96 bg-teal-500/15 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-1/2 -right-24 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card text-teal-300 text-xs font-semibold tracking-wider uppercase mb-4 shadow-sm border border-teal-400/20">
+<span class="inline-block w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+      Cheshire Career Tracker • Real-Time Portal Hub
+    </div>
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+<div class="max-w-2xl">
+<h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+          Chester Job Search <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-sky-300">Dashboard</span>
+</h1>
+<p class="mt-3 text-slate-300 text-base sm:text-lg leading-relaxed font-normal">
+          Useful job boards, local opportunities, university vacancies, recruitment agencies and science-related roles — all organized in one productive workspace.
+        </p>
+</div>
+<!-- Live Dashboard Metric Badges -->
+<div class="grid grid-cols-3 gap-2.5 sm:gap-3.5 w-full lg:w-auto">
+<!-- Sites Visited -->
+<div class="glass-card rounded-2xl p-3.5 sm:p-4 text-left min-w-[100px] sm:min-w-[130px] border border-white/10 hover:border-white/20 transition-colors">
+<div class="flex items-center gap-1.5 text-teal-300 mb-1">
+<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[11px] sm:text-xs font-semibold tracking-wide uppercase text-slate-300">Visited</span>
+</div>
+<div class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="visitedCount">0</div>
+<span class="text-[11px] text-slate-400">tracked clicks</span>
+</div>
+<!-- Links Listed -->
+<div class="glass-card rounded-2xl p-3.5 sm:p-4 text-left min-w-[100px] sm:min-w-[130px] border border-white/10 hover:border-white/20 transition-colors">
+<div class="flex items-center gap-1.5 text-sky-300 mb-1">
+<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 4a6 6 0 110 12 6 6 0 010-12zm0 3a3 3 0 100 6 3 3 0 000-6z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[11px] sm:text-xs font-semibold tracking-wide uppercase text-slate-300">Portals</span>
+</div>
+<div class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="totalCount">17</div>
+<span class="text-[11px] text-slate-400">curated boards</span>
+</div>
+<!-- Latest Visit -->
+<div class="glass-card rounded-2xl p-3.5 sm:p-4 text-left min-w-[110px] sm:min-w-[160px] border border-white/10 hover:border-white/20 transition-colors">
+<div class="flex items-center gap-1.5 text-amber-300 mb-1">
+<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[11px] sm:text-xs font-semibold tracking-wide uppercase text-slate-300">Last Active</span>
+</div>
+<div class="text-sm sm:text-base font-bold text-white tracking-tight truncate pt-1" id="latestVisit">—</div>
+<span class="text-[11px] text-slate-400">browser session</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 flex-1 w-full pb-16 pt-6">
+<!-- Interactive Unified Toolbar / Command Panel -->
+<div class="bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 p-4 sm:p-5 mb-6 relative">
+<div class="flex flex-col md:flex-row gap-3.5 items-stretch md:items-center">
+<!-- Search Input -->
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input aria-label="Search job portals" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-slate-800 placeholder-slate-400 text-sm font-medium rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-150" id="search" placeholder="Search portals, job types, campus roles or keywords…" type="search">
+</div>
+<!-- Category Filter Pills Selector -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none" id="categoryPillGroup">
+<button class="cat-pill px-3 py-2 text-xs font-semibold rounded-xl transition-all whitespace-nowrap bg-teal-500 text-white shadow-sm ring-1 ring-teal-600/20" data-cat="all" type="button">All Categories</button>
+<button class="cat-pill px-3 py-2 text-xs font-semibold rounded-xl transition-all whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200/70 hover:text-slate-800" data-cat="University" type="button">University</button>
+<button class="cat-pill px-3 py-2 text-xs font-semibold rounded-xl transition-all whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200/70 hover:text-slate-800" data-cat="Local &amp; general" type="button">Local &amp; General</button>
+<button class="cat-pill px-3 py-2 text-xs font-semibold rounded-xl transition-all whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200/70 hover:text-slate-800" data-cat="Science &amp; healthcare" type="button">Science &amp; Healthcare</button>
+<button class="cat-pill px-3 py-2 text-xs font-semibold rounded-xl transition-all whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200/70 hover:text-slate-800" data-cat="Recruitment agencies" type="button">Agencies</button>
+</div>
+<!-- Hidden standard select retained for seamless accessibility/compatibility -->
+
+<!-- Clear Visit History Button -->
+<div class="shrink-0 border-t md:border-t-0 md:border-l border-slate-200 pt-3 md:pt-0 md:pl-3.5 flex items-center justify-end">
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 transition-all" id="reset" title="Clear all recorded click timestamps" type="button">
+<svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Clear History
+        </button>
+</div>
+</div>
+<!-- Quick info sub-bar -->
+<div class="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+<div class="flex items-center gap-1.5">
+<span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-teal-50 text-teal-600 font-bold text-[10px]">ℹ</span>
+<span class="">Click <strong class="text-slate-700 font-medium">Open website ↗</strong> to view vacancies in a new tab. The time of your last click is saved to your browser.</span>
+</div>
+<span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 uppercase tracking-wider" id="filteredMatchBadge">17 of 17 portals</span>
+</div>
+</div>
+<!-- Content Container (Groups & Cards) -->
+<div class="space-y-10" id="content"><section class="group"><div class="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-200/80">
+      <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+        University
+      </h2>
+      <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+        2 portals
+      </span>
+    </div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5"><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">University of Chester CareerHub</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-teal-50 text-teal-700 border-teal-200/70">University</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Start here for student opportunities and careers support connected with the university.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://careers.chester.ac.uk/students" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">University of Chester vacancies</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-teal-50 text-teal-700 border-teal-200/70">University</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Official university vacancies, including relevant support and professional roles.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://jobs.chester.ac.uk/Vacancies.aspx" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article></div></section><section class="group"><div class="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-200/80">
+      <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+        Local &amp; general
+      </h2>
+      <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+        8 portals
+      </span>
+    </div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5"><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Cheshire &amp; Warrington Opportunities</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-blue-50 text-blue-700 border-blue-200/70">Local &amp; general</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Regional vacancy portal for Chester and surrounding areas.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.candwopportunities.co.uk/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Chester BID Jobs</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-blue-50 text-blue-700 border-blue-200/70">Local &amp; general</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Explore city-centre employers and vacancies in retail, hospitality and leisure.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.chesterbid.co.uk/jobs/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">GOV.UK Find a Job</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-blue-50 text-blue-700 border-blue-200/70">Local &amp; general</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Official UK vacancy search. Try Chester and nearby postcodes or towns.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://findajob.dwp.gov.uk/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Reed</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-blue-50 text-blue-700 border-blue-200/70">Local &amp; general</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">General vacancies including office support, customer service and temporary work.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.reed.co.uk/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Totaljobs</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-blue-50 text-blue-700 border-blue-200/70">Local &amp; general</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">An additional broad job board for vacancies not always seen on your other platforms.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.totaljobs.com/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Cheshire West and Chester Council jobs</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-blue-50 text-blue-700 border-blue-200/70">Local &amp; general</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Council vacancies and public-sector opportunities in the local area.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.cheshirewestandchester.gov.uk/residents/jobs" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Indeed UK</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-blue-50 text-blue-700 border-blue-200/70">Local &amp; general</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Already using it? Set focused alerts for Chester, part-time roles and relevant keywords.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://uk.indeed.com/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">LinkedIn Jobs</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-blue-50 text-blue-700 border-blue-200/70">Local &amp; general</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Already using it? Keep job alerts focused and connect with relevant local recruiters.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.linkedin.com/jobs/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article></div></section><section class="group"><div class="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-200/80">
+      <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+        Science &amp; healthcare
+      </h2>
+      <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+        3 portals
+      </span>
+    </div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5"><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">NHS Jobs</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-emerald-50 text-emerald-700 border-emerald-200/70">Science &amp; healthcare</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Search for suitable entry-level healthcare, pathology support and laboratory-related roles; check essential criteria carefully.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.jobs.nhs.uk/candidate/search" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Countess of Chester Hospital careers</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-emerald-50 text-emerald-700 border-emerald-200/70">Science &amp; healthcare</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Local hospital careers page for suitable support, administrative and healthcare vacancies.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.coch.nhs.uk/working-with-us/.aspx" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">jobs.ac.uk</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-emerald-50 text-emerald-700 border-emerald-200/70">Science &amp; healthcare</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Academic, university and research opportunities, including some laboratory-support roles.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.jobs.ac.uk/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article></div></section><section class="group"><div class="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-200/80">
+      <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+        Recruitment agencies
+      </h2>
+      <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+        4 portals
+      </span>
+    </div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5"><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Reed Recruitment</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-indigo-50 text-indigo-700 border-indigo-200/70">Recruitment agencies</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Register or contact the agency about temporary and permanent work matching your availability.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.reed.com/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Adecco</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-indigo-50 text-indigo-700 border-indigo-200/70">Recruitment agencies</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Ask about suitable temporary assignments and confirm shifts and transport before accepting.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.adecco.com/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Proactive Personnel</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-indigo-50 text-indigo-700 border-indigo-200/70">Recruitment agencies</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Worth checking for warehouse, production and general operative opportunities.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.proactivepersonnel.net/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article><article class="card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative"><div class="flex items-start justify-between gap-3 mb-2"><h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors">Meridian Business Support</h3><span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-indigo-50 text-indigo-700 border-indigo-200/70">Recruitment agencies</span></div><p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">Explore industrial and logistics roles; check travel time and shift arrangements.</p><div class="space-y-3 pt-3 border-t border-slate-100"><a class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20" href="https://www.meridianbs.co.uk/" target="_blank" rel="noopener noreferrer">
+        <span class="">Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a><div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        </div></div></article></div></section></div>
+<!-- Empty state fallback -->
+<div class="hidden bg-white border border-slate-200 rounded-2xl p-12 text-center shadow-sm" id="empty" style="display: none;">
+<div class="w-14 h-14 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-3.5">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-base font-bold text-slate-800">No matching portals found</h3>
+<p class="text-sm text-slate-500 max-w-sm mx-auto mt-1">Try refining your search keyword or selecting a different category from the filter toolbar above.</p>
+<button class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 bg-teal-50 text-teal-700 rounded-xl hover:bg-teal-100 transition-colors" onclick="document.getElementById('search').value=''; selectCategory('all');">
+      Reset search filters
+    </button>
+</div>
+<!-- Refined Footer & Advisory Cards -->
+<footer class="mt-14 pt-8 border-t border-slate-200">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Privacy Card -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-4 flex gap-3.5 shadow-sm">
+<div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center shrink-0 mt-0.5">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h4 class="text-xs font-bold text-slate-800 tracking-wide uppercase">Local Privacy Protection</h4>
+<p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            Visit timestamps are recorded exclusively in your browser's local storage and never transmitted to external servers. Clearing your browsing cache or switching computers resets this record.
+          </p>
+</div>
+</div>
+<!-- Compliance Card -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-4 flex gap-3.5 shadow-sm">
+<div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h4 class="text-xs font-bold text-slate-800 tracking-wide uppercase">Application &amp; Visa Compliance</h4>
+<p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            Always inspect each role's shift requirements, public transit route, eligibility criteria, and your exact Student Visa term-time working regulations before submitting applications.
+          </p>
+</div>
+</div>
+</div>
+<div class="text-center text-xs text-slate-400 mt-6 font-medium">
+      Chester Career Search Portal • Curated for university students &amp; local jobseekers
+    </div>
+</footer>
+</main>
+<script>
+const portals = [
+ {name:"University of Chester CareerHub",url:"https://careers.chester.ac.uk/students",category:"University",tags:"student jobs campus part-time ambassador catering domestic clerical",desc:"Start here for student opportunities and careers support connected with the university."},
+ {name:"University of Chester vacancies",url:"https://jobs.chester.ac.uk/Vacancies.aspx",category:"University",tags:"university jobs campus administration research",desc:"Official university vacancies, including relevant support and professional roles."},
+ {name:"Cheshire & Warrington Opportunities",url:"https://www.candwopportunities.co.uk/",category:"Local & general",tags:"regional local part-time Chester jobs",desc:"Regional vacancy portal for Chester and surrounding areas."},
+ {name:"Chester BID Jobs",url:"https://www.chesterbid.co.uk/jobs/",category:"Local & general",tags:"city centre retail shops cafe restaurant hospitality leisure",desc:"Explore city-centre employers and vacancies in retail, hospitality and leisure."},
+ {name:"GOV.UK Find a Job",url:"https://findajob.dwp.gov.uk/",category:"Local & general",tags:"official jobs full-time part-time",desc:"Official UK vacancy search. Try Chester and nearby postcodes or towns."},
+ {name:"Reed",url:"https://www.reed.co.uk/",category:"Local & general",tags:"administration reception customer service temporary professional",desc:"General vacancies including office support, customer service and temporary work."},
+ {name:"Totaljobs",url:"https://www.totaljobs.com/",category:"Local & general",tags:"retail hospitality warehouse admin customer service",desc:"An additional broad job board for vacancies not always seen on your other platforms."},
+ {name:"Cheshire West and Chester Council jobs",url:"https://www.cheshirewestandchester.gov.uk/residents/jobs",category:"Local & general",tags:"council public sector cleaning administration support",desc:"Council vacancies and public-sector opportunities in the local area."},
+ {name:"NHS Jobs",url:"https://www.jobs.nhs.uk/candidate/search",category:"Science & healthcare",tags:"NHS laboratory pathology sample reception healthcare science assistant",desc:"Search for suitable entry-level healthcare, pathology support and laboratory-related roles; check essential criteria carefully."},
+ {name:"Countess of Chester Hospital careers",url:"https://www.coch.nhs.uk/working-with-us/.aspx",category:"Science & healthcare",tags:"hospital healthcare laboratory support administration",desc:"Local hospital careers page for suitable support, administrative and healthcare vacancies."},
+ {name:"jobs.ac.uk",url:"https://www.jobs.ac.uk/",category:"Science & healthcare",tags:"university academic research laboratory science assistant",desc:"Academic, university and research opportunities, including some laboratory-support roles."},
+ {name:"Reed Recruitment",url:"https://www.reed.com/",category:"Recruitment agencies",tags:"recruitment agency temporary permanent office business support",desc:"Register or contact the agency about temporary and permanent work matching your availability."},
+ {name:"Adecco",url:"https://www.adecco.com/",category:"Recruitment agencies",tags:"agency temporary hospitality customer service administration",desc:"Ask about suitable temporary assignments and confirm shifts and transport before accepting."},
+ {name:"Proactive Personnel",url:"https://www.proactivepersonnel.net/",category:"Recruitment agencies",tags:"warehouse production general operative recruitment",desc:"Worth checking for warehouse, production and general operative opportunities."},
+ {name:"Meridian Business Support",url:"https://www.meridianbs.co.uk/",category:"Recruitment agencies",tags:"warehouse industrial manufacturing logistics recruitment",desc:"Explore industrial and logistics roles; check travel time and shift arrangements."},
+ {name:"Indeed UK",url:"https://uk.indeed.com/",category:"Local & general",tags:"general jobs retail hospitality warehouse",desc:"Already using it? Set focused alerts for Chester, part-time roles and relevant keywords."},
+ {name:"LinkedIn Jobs",url:"https://www.linkedin.com/jobs/",category:"Local & general",tags:"professional jobs recruiters administration science",desc:"Already using it? Keep job alerts focused and connect with relevant local recruiters."}
+];
+
+const KEY = "chesterJobPortalVisitsV1";
+
+const getVisits = () => {
+  try {
+    return JSON.parse(localStorage.getItem(KEY) || "{}");
+  } catch(e) {
+    return {};
+  }
+};
+
+const fmt = iso => {
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short"
+    }).format(new Date(iso));
+  } catch(e) {
+    return iso;
+  }
+};
+
+// "1 min ago" style relative time
+const timeAgo = iso => {
+  const t = new Date(iso).getTime();
+  if (isNaN(t)) return "—";
+  const secs = Math.max(0, Math.floor((Date.now() - t) / 1000));
+  if (secs < 60) return "just now";
+  const mins = Math.floor(secs / 60);
+  if (mins < 60) return `${mins} min ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs} ${hrs === 1 ? "hr" : "hrs"} ago`;
+  const days = Math.floor(hrs / 24);
+  if (days < 7) return `${days} ${days === 1 ? "day" : "days"} ago`;
+  return fmt(iso); // older than a week: show the actual date
+};
+
+// Re-writes every visible "x min ago" label so they stay current without a page reload
+function refreshAgo() {
+  document.querySelectorAll("[data-time]").forEach(el => {
+    el.textContent = timeAgo(el.dataset.time);
+  });
+}
+
+// Styling badge color presets per category
+function getBadgeStyles(cat) {
+  switch(cat) {
+    case "University":
+      return "bg-teal-50 text-teal-700 border-teal-200/70";
+    case "Local & general":
+      return "bg-blue-50 text-blue-700 border-blue-200/70";
+    case "Science & healthcare":
+      return "bg-emerald-50 text-emerald-700 border-emerald-200/70";
+    case "Recruitment agencies":
+      return "bg-indigo-50 text-indigo-700 border-indigo-200/70";
+    default:
+      return "bg-slate-100 text-slate-700 border-slate-200";
+  }
+}
+
+function updateStats() {
+  const v = getVisits(), vals = Object.values(v);
+  document.getElementById("visitedCount").textContent = vals.length;
+  document.getElementById("totalCount").textContent = portals.length;
+  const latest = vals.sort((a,b) => new Date(b) - new Date(a))[0];
+  const latestEl = document.getElementById("latestVisit");
+  if (latest) {
+    latestEl.dataset.time = latest;
+    latestEl.title = fmt(latest);
+    latestEl.textContent = timeAgo(latest);
+  } else {
+    delete latestEl.dataset.time;
+    latestEl.removeAttribute("title");
+    latestEl.textContent = "—";
+  }
+}
+
+let currentCategory = "all";
+
+function selectCategory(cat) {
+  currentCategory = cat;
+  
+  // Update category pills styling
+  document.querySelectorAll(".cat-pill").forEach(pill => {
+    if (pill.getAttribute("data-cat") === cat) {
+      pill.className = "cat-pill px-3 py-2 text-xs font-semibold rounded-xl transition-all whitespace-nowrap bg-teal-500 text-white shadow-sm ring-1 ring-teal-600/20";
+    } else {
+      pill.className = "cat-pill px-3 py-2 text-xs font-semibold rounded-xl transition-all whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200/70 hover:text-slate-800";
+    }
+  });
+  render();
+}
+
+function render() {
+  const search = document.getElementById("search").value.toLowerCase().trim();
+  const category = currentCategory;
+  const visits = getVisits();
+
+  const filtered = portals.filter(p => 
+    (category === "all" || p.category === category) &&
+    [p.name, p.desc, p.tags, p.category].join(" ").toLowerCase().includes(search)
+  );
+
+  const root = document.getElementById("content");
+  root.innerHTML = "";
+
+  const matchBadge = document.getElementById("filteredMatchBadge");
+  if (matchBadge) {
+    matchBadge.textContent = `${filtered.length} of ${portals.length} portals`;
+  }
+
+  // Preserve natural ordering of categories as in original
+  const orderedCatOrder = ["University", "Local & general", "Science & healthcare", "Recruitment agencies"];
+  const presentCats = [...new Set(filtered.map(p => p.category))];
+  const sortedCategories = orderedCatOrder.filter(c => presentCats.includes(c));
+
+  sortedCategories.forEach(cat => {
+    const catPortals = filtered.filter(p => p.category === cat);
+    if (!catPortals.length) return;
+
+    const section = document.createElement("section");
+    section.className = "group";
+
+    // Category Header with count badge
+    const headerWrapper = document.createElement("div");
+    headerWrapper.className = "flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-200/80";
+    headerWrapper.innerHTML = `
+      <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+        ${cat}
+      </h2>
+      <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+        ${catPortals.length} ${catPortals.length === 1 ? 'portal' : 'portals'}
+      </span>
+    `;
+    section.appendChild(headerWrapper);
+
+    // Cards Grid
+    const grid = document.createElement("div");
+    grid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5";
+
+    catPortals.forEach(p => {
+      const isVisited = !!visits[p.name];
+      const card = document.createElement("article");
+      card.className = "card-lift bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-sm relative";
+
+      // Top row: Title and Badge
+      const top = document.createElement("div");
+      top.className = "flex items-start justify-between gap-3 mb-2";
+
+      const h3 = document.createElement("h3");
+      h3.className = "text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-teal-700 transition-colors";
+      h3.textContent = p.name;
+
+      const badge = document.createElement("span");
+      badge.className = `shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${getBadgeStyles(p.category)}`;
+      badge.textContent = p.category;
+
+      top.append(h3, badge);
+
+      // Description
+      const desc = document.createElement("p");
+      desc.className = "text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1";
+      desc.textContent = p.desc;
+
+      // Bottom action & visit meta
+      const bottomArea = document.createElement("div");
+      bottomArea.className = "space-y-3 pt-3 border-t border-slate-100";
+
+      // Primary Action Button
+      const link = document.createElement("a");
+      link.className = "w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 active:scale-[0.99] transition-all duration-150 shadow-sm shadow-teal-500/20";
+      link.href = p.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.innerHTML = `
+        <span>Open website</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      `;
+
+      const recordVisit = () => {
+        const v = getVisits();
+        v[p.name] = new Date().toISOString();
+        try {
+          localStorage.setItem(KEY, JSON.stringify(v));
+        } catch(e) {}
+        setTimeout(() => {
+          updateStats();
+          render();
+        }, 0);
+      };
+      link.addEventListener("click", recordVisit);
+      link.addEventListener("auxclick", (e) => { if (e.button === 1) recordVisit(); });
+
+      // Visit Status Metadata
+      const meta = document.createElement("div");
+      meta.className = "flex items-center gap-1.5 text-[11px] text-slate-500";
+      
+      if (isVisited) {
+        meta.innerHTML = `
+          <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+          <span class="truncate" title="${fmt(visits[p.name])}">Last clicked: <strong class="text-emerald-700 font-semibold" data-time="${visits[p.name]}">${timeAgo(visits[p.name])}</strong></span>
+        `;
+      } else {
+        meta.innerHTML = `
+          <span class="w-2 h-2 rounded-full bg-slate-300 shrink-0"></span>
+          <span class="text-slate-400">Not opened from this dashboard yet</span>
+        `;
+      }
+
+      bottomArea.append(link, meta);
+      card.append(top, desc, bottomArea);
+      grid.appendChild(card);
+    });
+
+    section.appendChild(grid);
+    root.appendChild(section);
+  });
+
+  document.getElementById("empty").style.display = filtered.length ? "none" : "block";
+  updateStats();
+}
+
+// Event Listeners
+document.getElementById("search").addEventListener("input", render);
+
+// Category Pill click delegation
+document.getElementById("categoryPillGroup").addEventListener("click", (e) => {
+  const btn = e.target.closest(".cat-pill");
+  if (btn) {
+    const cat = btn.getAttribute("data-cat");
+    selectCategory(cat);
+  }
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  if (confirm("Clear all saved visit timestamps for this dashboard?")) {
+    try {
+      localStorage.removeItem(KEY);
+    } catch(e) {}
+    render();
+  }
+});
+
+// Initial boot
+document.getElementById("totalCount").textContent = portals.length;
+render();
+
+// Update "x min ago" labels every 20s, and straight away when you come back to the tab
+setInterval(refreshAgo, 20000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) refreshAgo(); });
+window.addEventListener("focus", refreshAgo);
+</script>
+
+
+</body></html>
