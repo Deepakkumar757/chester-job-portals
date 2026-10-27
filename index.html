@@ -1,7 +1,9 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1" name="viewport">
-<title>Chester Job Search Dashboard</title>
+<title>Chester Job Search Hub</title>
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
@@ -46,6 +48,11 @@
     box-shadow: 0 12px 28px -6px rgba(11, 25, 44, 0.09), 0 4px 10px -2px rgba(11, 25, 44, 0.04);
   }
 </style>
+
+<style>
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif}.card{transition:transform .18s ease,box-shadow .18s ease}.card:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(15,23,42,.18)}
+.view.hidden{display:none!important}.view.active{display:block}
+</style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col selection:bg-teal-500 selection:text-white">
 <!-- Header Section -->
@@ -66,6 +73,13 @@
 <p class="mt-3 text-slate-300 text-base sm:text-lg leading-relaxed font-normal">
           Useful job boards, local opportunities, university vacancies, recruitment agencies and science-related roles — all organized in one productive workspace.
         </p>
+
+<div class="mt-6 flex flex-wrap gap-3">
+  <a href="chester_part_time_employers.html" class="inline-flex items-center gap-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-navy-950 px-4 py-2.5 text-sm font-extrabold shadow-lg transition-colors">
+    <span aria-hidden="true">↗</span> Browse Chester part-time employers
+  </a>
+  <span class="inline-flex items-center rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-300">Separate directory: shops · warehouses · cafés · hospitality · cleaning</span>
+</div>
 </div>
 <!-- Live Dashboard Metric Badges -->
 <div class="grid grid-cols-3 gap-2.5 sm:gap-3.5 w-full lg:w-auto">
@@ -88,7 +102,7 @@
 </svg>
 <span class="text-[11px] sm:text-xs font-semibold tracking-wide uppercase text-slate-300">Portals</span>
 </div>
-<div class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="totalCount">17</div>
+<div class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="totalCount">27</div>
 <span class="text-[11px] text-slate-400">curated boards</span>
 </div>
 <!-- Latest Visit -->
@@ -106,7 +120,16 @@
 </div>
 </div>
 </header>
+
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 -mt-5 mb-5 relative z-20" aria-label="Dashboard pages">
+  <div class="inline-flex flex-wrap gap-2 rounded-2xl bg-white border border-slate-200 shadow-lg p-2">
+    <button type="button" data-view="dashboard" class="page-tab px-4 py-2.5 rounded-xl text-sm font-bold bg-teal-600 text-white">Job portals</button>
+    <button type="button" data-view="employers" class="page-tab px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100">Part-time employers</button>
+  </div>
+</nav>
+
 <!-- Main Workspace -->
+<section id="dashboardView" class="view active">
 <main class="max-w-6xl mx-auto px-4 sm:px-6 flex-1 w-full pb-16 pt-6">
 <!-- Interactive Unified Toolbar / Command Panel -->
 <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 p-4 sm:p-5 mb-6 relative">
@@ -146,9 +169,37 @@
 <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-teal-50 text-teal-600 font-bold text-[10px]">ℹ</span>
 <span class="">Click <strong class="text-slate-700 font-medium">Open website ↗</strong> to view vacancies in a new tab. The time of your last click is saved to your browser.</span>
 </div>
-<span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 uppercase tracking-wider" id="filteredMatchBadge">17 of 17 portals</span>
+<span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 uppercase tracking-wider" id="filteredMatchBadge">24 of 24 portals</span>
 </div>
 </div>
+<!-- Focused search shortcuts and application tracker -->
+<section class="mb-8 space-y-5" aria-label="Job search tools">
+  <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6">
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-4">
+      <div>
+        <p class="text-xs uppercase tracking-wider font-bold text-teal-700">Search smarter</p>
+        <h2 class="text-lg font-extrabold text-slate-900 mt-1">Start with a focused search</h2>
+        <p class="text-sm text-slate-600 mt-1">Use a shortcut to filter the portal list by the roles you want to target.</p>
+      </div>
+      <span class="text-xs text-slate-500 bg-slate-100 rounded-lg px-3 py-2">Click tracking records portal visits, not job applications.</span>
+    </div>
+    <div class="flex flex-wrap gap-2" id="quickSearches">
+      <button type="button" data-query="part-time student weekend temporary" class="quick-search px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 hover:border-teal-300 hover:bg-teal-50 text-slate-700">Part-time / student</button>
+      <button type="button" data-query="retail supermarket shop" class="quick-search px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 hover:border-teal-300 hover:bg-teal-50 text-slate-700">Retail &amp; supermarkets</button>
+      <button type="button" data-query="hospitality catering cafe restaurant" class="quick-search px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 hover:border-teal-300 hover:bg-teal-50 text-slate-700">Hospitality</button>
+      <button type="button" data-query="cleaning domestic facilities" class="quick-search px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 hover:border-teal-300 hover:bg-teal-50 text-slate-700">Cleaning / facilities</button>
+      <button type="button" data-query="warehouse production logistics" class="quick-search px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 hover:border-teal-300 hover:bg-teal-50 text-slate-700">Warehouse / logistics</button>
+      <button type="button" data-query="administration reception customer service" class="quick-search px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 hover:border-teal-300 hover:bg-teal-50 text-slate-700">Admin / customer service</button>
+      <button type="button" data-query="biomedical science biochemistry laboratory pathology research" class="quick-search px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 hover:border-teal-300 hover:bg-teal-50 text-slate-700">Biomedical / lab</button>
+      <button type="button" data-query="" class="quick-search px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 hover:border-teal-300 hover:bg-teal-50 text-slate-700">Show all portals</button>
+    </div>
+    <div class="mt-4 rounded-xl bg-amber-50 border border-amber-100 p-3 text-xs text-amber-900 leading-relaxed">
+      <strong>Student-work reminder:</strong> check your own visa conditions and current term-time work limit, the employer's eligibility requirements, shift end times and public-transport options before applying. A portal listing does not guarantee eligibility or an easy commute.
+    </div>
+  </div>
+
+  </section>
+
 <!-- Content Container (Groups & Cards) -->
 <div class="space-y-10" id="content"><section class="group"><div class="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-200/80">
       <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
@@ -369,6 +420,59 @@
     </div>
 </footer>
 </main>
+</section>
+
+
+<section id="employersView" class="view hidden">
+
+<header class="bg-slate-950 text-white"><div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+<button type="button" data-view="dashboard" class="text-sm text-teal-300 hover:text-teal-200 font-semibold">← Back to job portals dashboard</button>
+<div class="mt-5 inline-flex rounded-full bg-white/10 px-3 py-1.5 text-xs uppercase tracking-wider text-teal-200 font-bold">Chester · Local employer directory</div>
+<h1 class="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight">Part-time employers to check</h1>
+<p class="mt-3 max-w-3xl text-slate-300 leading-relaxed">A practical directory of shops, supermarkets, cafés, hospitality businesses, warehouse/logistics companies, facilities employers and recruitment agencies that may advertise part-time work around Chester. These are employer career pages or agency sites, not a guarantee that a vacancy is open today.</p>
+<div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="rounded-2xl bg-white/10 border border-white/10 p-4"><div class="text-2xl font-extrabold" id="employerCount">52</div><div class="text-xs text-slate-300 mt-1">employer / agency links</div></div>
+<div class="rounded-2xl bg-white/10 border border-white/10 p-4"><div class="text-2xl font-extrabold">6</div><div class="text-xs text-slate-300 mt-1">job categories</div></div>
+<div class="rounded-2xl bg-white/10 border border-white/10 p-4"><div class="text-2xl font-extrabold">Chester</div><div class="text-xs text-slate-300 mt-1">search location to use</div></div>
+<div class="rounded-2xl bg-white/10 border border-white/10 p-4"><div class="text-2xl font-extrabold">Official</div><div class="text-xs text-slate-300 mt-1">career pages prioritised</div></div></div></div></header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-7 pb-14">
+<section class="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm"><div class="flex flex-col md:flex-row gap-3">
+<input id="search" type="search" class="flex-1 rounded-xl border-slate-200 bg-slate-50 text-sm" placeholder="Search employer, role type, warehouse, café, stockroom…">
+<select id="category" class="rounded-xl border-slate-200 bg-slate-50 text-sm"><option value="all">All categories</option></select></div>
+<div class="mt-4 flex flex-wrap gap-2" id="shortcuts">
+<button data-filter="Supermarkets & convenience" class="rounded-xl bg-teal-50 text-teal-800 border border-teal-100 px-3 py-2 text-xs font-bold">Supermarkets</button>
+<button data-filter="Retail shops & retail parks" class="rounded-xl bg-teal-50 text-teal-800 border border-teal-100 px-3 py-2 text-xs font-bold">Retail shops</button>
+<button data-filter="Cafés, fast food & hospitality" class="rounded-xl bg-teal-50 text-teal-800 border border-teal-100 px-3 py-2 text-xs font-bold">Cafés & hospitality</button>
+<button data-filter="Warehouse, parcel & logistics" class="rounded-xl bg-teal-50 text-teal-800 border border-teal-100 px-3 py-2 text-xs font-bold">Warehouse & logistics</button>
+<button data-filter="Cleaning, facilities & care" class="rounded-xl bg-teal-50 text-teal-800 border border-teal-100 px-3 py-2 text-xs font-bold">Cleaning & facilities</button>
+<button data-filter="Recruitment agencies" class="rounded-xl bg-teal-50 text-teal-800 border border-teal-100 px-3 py-2 text-xs font-bold">Recruitment agencies</button>
+<button data-filter="all" class="rounded-xl bg-slate-100 text-slate-700 border border-slate-200 px-3 py-2 text-xs font-bold">Show all</button></div>
+<p class="mt-4 text-xs text-slate-500"><span id="resultCount"></span> · Search using “Chester”, “CH1”, “part-time”, “weekend”, “evening”, “warehouse operative”, “stock assistant” or “kitchen porter” on each site.</p></section>
+<section class="mt-7 rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
+<h2 class="font-extrabold text-amber-950">Good first checks from recent search results</h2>
+<p class="text-sm text-amber-900 mt-1">These pages had Chester part-time roles indexed in recent search results when this directory was prepared. Recheck the advert before applying because listings can close quickly.</p>
+<div class="grid md:grid-cols-2 gap-3 mt-4">
+<a href="https://www.asda.jobs/jobs/service-colleague-express-in-chester.39802" target="_blank" rel="noopener noreferrer" class="block rounded-xl bg-white border border-amber-200 p-4 hover:border-amber-400"><div class="font-bold text-slate-900">Asda — Service Colleague (Express)</div><p class="text-xs text-slate-600 mt-1">Chester · part-time · listing showed 8 hours/week and a closing date of 8 November 2026.</p><span class="text-xs text-teal-700 font-bold mt-2 inline-block">Check vacancy ↗</span></a>
+<a href="https://careers.next.co.uk/jobs/N132805" target="_blank" rel="noopener noreferrer" class="block rounded-xl bg-white border border-amber-200 p-4 hover:border-amber-400"><div class="font-bold text-slate-900">NEXT — Team Member, Broughton Park</div><p class="text-xs text-slate-600 mt-1">Part-time · listing showed 17.5 hours/week and a closing date of 9 November 2026.</p><span class="text-xs text-teal-700 font-bold mt-2 inline-block">Check vacancy ↗</span></a>
+<a href="https://careers.kfc.co.uk/jobs/team-member-in-chester.3813" target="_blank" rel="noopener noreferrer" class="block rounded-xl bg-white border border-amber-200 p-4 hover:border-amber-400"><div class="font-bold text-slate-900">KFC — Team Member</div><p class="text-xs text-slate-600 mt-1">Chester · part-time role indexed with a 1 November 2026 closing date; verify status.</p><span class="text-xs text-teal-700 font-bold mt-2 inline-block">Check vacancy ↗</span></a>
+<a href="https://www.therange.co.uk/careers/" target="_blank" rel="noopener noreferrer" class="block rounded-xl bg-white border border-amber-200 p-4 hover:border-amber-400"><div class="font-bold text-slate-900">The Range — Warehouse Assistant</div><p class="text-xs text-slate-600 mt-1">A part-time Chester Retail Park warehouse role appeared in recent search results; use the employer page to check whether it remains open.</p><span class="text-xs text-teal-700 font-bold mt-2 inline-block">Check careers ↗</span></a>
+</div></section>
+<div id="employerList" class="mt-7 grid sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+<section class="mt-8 bg-white border border-slate-200 rounded-2xl p-5"><h2 class="font-extrabold text-slate-900">Warehouse areas worth searching</h2>
+<p class="text-sm text-slate-600 mt-2">Chester has employment and industrial locations including <strong>Sealand Industrial Estate</strong> and <strong>Chester West Employment Park</strong>. These areas include industrial, commercial and warehousing uses, but not every site is easy to reach by public transport. Check the actual worksite, shift start/end and last bus/train before applying.</p>
+<div class="mt-3 flex flex-wrap gap-3 text-sm"><a class="text-teal-700 font-bold underline" href="https://www.cheshirewestandchester.gov.uk/business/sites-and-premises/business-parks/chester-business-parks/sealand-industrial-estate" target="_blank" rel="noopener noreferrer">Sealand Industrial Estate details ↗</a>
+<a class="text-teal-700 font-bold underline" href="https://www.cheshirewestandchester.gov.uk/business/sites-and-premises/business-parks/chester-business-parks/chester-west-employment-park" target="_blank" rel="noopener noreferrer">Chester West Employment Park details ↗</a></div></section>
+<section class="mt-5 bg-slate-100 rounded-2xl p-5"><h2 class="font-extrabold text-slate-900">Application checks before you spend time</h2>
+<ul class="list-disc pl-5 mt-2 space-y-1.5 text-sm text-slate-700">
+<li>Filter to <strong>part-time</strong> and confirm contracted weekly hours. If your student immigration conditions limit term-time work, ensure the role fits those conditions.</li>
+<li>Check the exact address and shift times against public transport. Early warehouse, late hospitality and overnight shifts may not be practical without a suitable commute.</li>
+<li>Use the employer's official career page where possible. If a job board lists a role, verify it on the employer page before sharing sensitive information.</li>
+<li>Try nearby areas only if travel is realistic: Broughton, Saltney, Deeside, Ellesmere Port, Wrexham and other Cheshire border locations can have different commute times.</li>
+<li>“Part-time employer” means a plausible source to check, not a guarantee that it is currently recruiting or will hire every applicant.</li></ul></section>
+</main>
+
+</section>
+
 <script>
 const portals = [
  {name:"University of Chester CareerHub",url:"https://careers.chester.ac.uk/students",category:"University",tags:"student jobs campus part-time ambassador catering domestic clerical",desc:"Start here for student opportunities and careers support connected with the university."},
@@ -387,7 +491,17 @@ const portals = [
  {name:"Proactive Personnel",url:"https://www.proactivepersonnel.net/",category:"Recruitment agencies",tags:"warehouse production general operative recruitment",desc:"Worth checking for warehouse, production and general operative opportunities."},
  {name:"Meridian Business Support",url:"https://www.meridianbs.co.uk/",category:"Recruitment agencies",tags:"warehouse industrial manufacturing logistics recruitment",desc:"Explore industrial and logistics roles; check travel time and shift arrangements."},
  {name:"Indeed UK",url:"https://uk.indeed.com/",category:"Local & general",tags:"general jobs retail hospitality warehouse",desc:"Already using it? Set focused alerts for Chester, part-time roles and relevant keywords."},
- {name:"LinkedIn Jobs",url:"https://www.linkedin.com/jobs/",category:"Local & general",tags:"professional jobs recruiters administration science",desc:"Already using it? Keep job alerts focused and connect with relevant local recruiters."}
+ {name:"LinkedIn Jobs",url:"https://www.linkedin.com/jobs/",category:"Local & general",tags:"professional jobs recruiters administration science",desc:"Already using it? Keep job alerts focused and connect with relevant local recruiters."},
+ {name:"StudentJob UK",url:"https://www.studentjob.co.uk/",category:"Local & general",tags:"student part-time weekend temporary retail hospitality flexible",desc:"Student-focused vacancies; filter for part-time work and check each employer's shift pattern."},
+ {name:"E4S — Employment 4 Students",url:"https://www.e4s.co.uk/",category:"Local & general",tags:"student jobs part-time seasonal summer temporary",desc:"Student and seasonal work listings. Confirm the location, contract length and weekly hours."},
+ {name:"Chester Zoo Careers",url:"https://www.chesterzoo.org/careers",category:"Local & general",tags:"zoo animal care retail catering hospitality visitor services conservation",desc:"Check the official employer site for visitor-facing, retail, catering and other suitable vacancies."},
+ {name:"Storyhouse Jobs",url:"https://www.storyhouse.com/jobs/",category:"Local & general",tags:"theatre cinema hospitality cafe bar events customer service",desc:"Local arts venue opportunities may include hospitality, customer service and event work."},
+ {name:"Staff 86",url:"https://www.staff86.com/",category:"Recruitment agencies",tags:"recruitment Chester hospitality catering temporary",desc:"Check current local assignments and confirm the exact workplace, shift finish and transport options."},
+ {name:"University of Chester UniJob",url:"https://careers.chester.ac.uk/students",category:"University",tags:"UniJob student campus jobs part-time student employment",desc:"Use the university's student careers service to ask about UniJob and campus-based paid opportunities."},
+ {name:"University research and science roles",url:"https://jobs.chester.ac.uk/Vacancies.aspx",category:"Science & healthcare",tags:"biomedical science biochemistry laboratory research technician research assistant",desc:"Search the university's official vacancies for lab, research and technical-support roles; subject-specific posts may require experience."},
+ {name:"CV-Library",url:"https://www.cv-library.co.uk/",category:"Local & general",tags:"part-time retail warehouse customer service admin Chester",desc:"Use location and part-time filters; compare against the employer's own vacancy page before applying."},
+ {name:"Caterer.com",url:"https://www.caterer.com/",category:"Local & general",tags:"hospitality hotel kitchen porter restaurant bar catering part-time",desc:"Specialist hospitality vacancies for restaurants, hotels, catering and kitchen support."},
+ {name:"Leisurejobs",url:"https://www.leisurejobs.com/",category:"Local & general",tags:"leisure gym hotel visitor attraction hospitality part-time",desc:"Search leisure, fitness, hotel and visitor-attraction jobs around Chester."}
 ];
 
 const KEY = "chesterJobPortalVisitsV1";
@@ -616,6 +730,14 @@ function render() {
 
 // Event Listeners
 document.getElementById("search").addEventListener("input", render);
+document.getElementById("quickSearches").addEventListener("click", event => {
+  const button = event.target.closest("[data-query]");
+  if (!button) return;
+  document.getElementById("search").value = button.dataset.query;
+  selectCategory("all");
+  document.getElementById("search").scrollIntoView({behavior:"smooth",block:"center"});
+});
+
 
 // Category Pill click delegation
 document.getElementById("categoryPillGroup").addEventListener("click", (e) => {
@@ -644,6 +766,60 @@ setInterval(refreshAgo, 20000);
 document.addEventListener("visibilitychange", () => { if (!document.hidden) refreshAgo(); });
 window.addEventListener("focus", refreshAgo);
 </script>
+<script>
+const employers = [{"name": "Tesco", "category": "Supermarkets & convenience", "url": "https://www.tesco-careers.com/", "notes": "Store colleague, replenishment and online picking; search Chester and nearby stores."}, {"name": "Sainsbury's", "category": "Supermarkets & convenience", "url": "https://www.sainsburys.jobs/", "notes": "Customer assistant, online assistant, café and replenishment; check the exact store."}, {"name": "Asda", "category": "Supermarkets & convenience", "url": "https://www.asda.jobs/jobs?distance=5&location_city=Chester", "notes": "Store colleague, food services and online picking; Chester-specific search."}, {"name": "Aldi", "category": "Supermarkets & convenience", "url": "https://www.aldirecruitment.co.uk/", "notes": "Store assistant and warehouse roles; check contracted hours and availability windows."}, {"name": "Lidl", "category": "Supermarkets & convenience", "url": "https://careers.lidl.co.uk/", "notes": "Store assistant, bakery, warehouse and customer roles."}, {"name": "Morrisons", "category": "Supermarkets & convenience", "url": "https://www.morrisons.jobs/", "notes": "Customer assistant, replenishment, café and online roles."}, {"name": "Co-op", "category": "Supermarkets & convenience", "url": "https://jobs.coop.co.uk/", "notes": "Customer team member and store roles; some shifts include early mornings or late evenings."}, {"name": "Iceland", "category": "Supermarkets & convenience", "url": "https://www.icelandcareers.co.uk/", "notes": "Store assistant, delivery support and replenishment."}, {"name": "M&S", "category": "Retail shops & retail parks", "url": "https://jobs.marksandspencer.com/job-search", "notes": "Customer assistant, café and seasonal roles; search Chester."}, {"name": "Primark", "category": "Retail shops & retail parks", "url": "https://careers.primark.com/location/chester-england-united-kingdom-jobs/", "notes": "Retail assistant and stockroom roles. Check shift patterns and contract end dates."}, {"name": "NEXT", "category": "Retail shops & retail parks", "url": "https://careers.next.co.uk/", "notes": "Store team, stockroom and seasonal roles. Search Chester and Broughton Park."}, {"name": "B&Q", "category": "Retail shops & retail parks", "url": "https://careers-bandq.icims.com/jobs/", "notes": "Customer advisor, goods-in and retail roles; search for B&Q Chester."}, {"name": "The Range", "category": "Retail shops & retail parks", "url": "https://www.therange.co.uk/careers/", "notes": "Retail assistant and warehouse assistant roles; Chester Retail Park is worth checking."}, {"name": "B&M", "category": "Retail shops & retail parks", "url": "https://careers.bmstores.co.uk/", "notes": "Retail and replenishment roles; search Chester and surrounding stores."}, {"name": "Home Bargains", "category": "Retail shops & retail parks", "url": "https://jobs.homebargains.co.uk/", "notes": "Store team and stock roles; use location search."}, {"name": "Poundland", "category": "Retail shops & retail parks", "url": "https://www.poundlandcareers.co.uk/", "notes": "Store assistant and stock replenishment roles."}, {"name": "Boots", "category": "Retail shops & retail parks", "url": "https://www.boots.jobs/", "notes": "Customer advisor, retail assistant and pharmacy support roles; some roles have specific qualifications."}, {"name": "H&M", "category": "Retail shops & retail parks", "url": "https://career.hm.com/", "notes": "Sales advisor and stockroom roles; search Chester."}, {"name": "JD Sports / JD Group", "category": "Retail shops & retail parks", "url": "https://www.jdplc.com/careers", "notes": "Retail assistant and stockroom roles across group brands."}, {"name": "WHSmith", "category": "Retail shops & retail parks", "url": "https://www.whsmithcareers.co.uk/", "notes": "Retail roles, including travel locations; check Chester-area vacancies."}, {"name": "McDonald's", "category": "Cafés, fast food & hospitality", "url": "https://people.mcdonalds.co.uk/job-search", "notes": "Crew member and customer care roles; part-time contracts are common."}, {"name": "KFC", "category": "Cafés, fast food & hospitality", "url": "https://careers.kfc.co.uk/", "notes": "Team member and cook roles; a Chester part-time team-member vacancy was recently listed."}, {"name": "Greggs", "category": "Cafés, fast food & hospitality", "url": "https://careers.greggs.co.uk/", "notes": "Team member and shop roles; check opening and closing times."}, {"name": "Costa Coffee", "category": "Cafés, fast food & hospitality", "url": "https://www.costa.co.uk/careers", "notes": "Barista and team member roles; franchise operators may use separate career pages."}, {"name": "Starbucks", "category": "Cafés, fast food & hospitality", "url": "https://careers.starbucks.co.uk/", "notes": "Barista and shift roles; search Chester and nearby locations."}, {"name": "Greene King pubs", "category": "Cafés, fast food & hospitality", "url": "https://jobs.greeneking.co.uk/", "notes": "Kitchen assistant, cleaner, bar and waiting-team jobs; several Chester pubs recruit locally."}, {"name": "Compass Group", "category": "Cafés, fast food & hospitality", "url": "https://www.compass-careers.com/", "notes": "Catering assistant, kitchen porter and facilities support; confirm site and weekly hours."}, {"name": "Storyhouse", "category": "Cafés, fast food & hospitality", "url": "https://www.storyhouse.com/jobs/", "notes": "Venue, café, events and customer-service roles."}, {"name": "Chester Zoo", "category": "Cafés, fast food & hospitality", "url": "https://www.chesterzoo.org/careers", "notes": "Visitor services, retail, catering and seasonal roles; vacancies vary by season."}, {"name": "GXO Logistics", "category": "Warehouse, parcel & logistics", "url": "https://gxo.com/careers/", "notes": "Warehouse operative and logistics jobs; check site location and shift transport."}, {"name": "DHL", "category": "Warehouse, parcel & logistics", "url": "https://careers.dhl.com/global/en", "notes": "Warehouse, parcel, logistics and operations jobs; search Chester/Cheshire."}, {"name": "Amazon", "category": "Warehouse, parcel & logistics", "url": "https://www.amazon.jobs/en/locations/united-kingdom", "notes": "Fulfilment and delivery-station roles; check the exact site and commute."}, {"name": "Royal Mail", "category": "Warehouse, parcel & logistics", "url": "https://jobs.royalmailgroup.com/", "notes": "Mail centre, parcel and delivery support roles; hours and shift times vary."}, {"name": "Evri", "category": "Warehouse, parcel & logistics", "url": "https://careers.evri.com/", "notes": "Warehouse, parcel and courier opportunities; check whether roles are employed or self-employed."}, {"name": "DPD", "category": "Warehouse, parcel & logistics", "url": "https://careers.dpd.co.uk/", "notes": "Depot, warehouse and parcel operations; check location and shift pattern."}, {"name": "Wincanton", "category": "Warehouse, parcel & logistics", "url": "https://careers.wincanton.co.uk/", "notes": "Warehouse, supply-chain and logistics roles."}, {"name": "Ocado Group", "category": "Warehouse, parcel & logistics", "url": "https://careers.ocadogroup.com/", "notes": "Warehouse and operations roles; check whether the site is realistically commutable from Chester."}, {"name": "Mitie", "category": "Cleaning, facilities & care", "url": "https://www.mitie.com/careers/", "notes": "Cleaning, security and facilities support; verify any required checks or licences."}, {"name": "OCS", "category": "Cleaning, facilities & care", "url": "https://ocs.com/careers/", "notes": "Cleaning, facilities and support roles at client sites."}, {"name": "Sodexo", "category": "Cleaning, facilities & care", "url": "https://www.sodexojobs.co.uk/", "notes": "Cleaning, catering, portering and facilities jobs."}, {"name": "ISS", "category": "Cleaning, facilities & care", "url": "https://www.uk.issworld.com/careers", "notes": "Cleaning and workplace support roles; check site location and shift times."}, {"name": "Cheshire West and Chester Council", "category": "Cleaning, facilities & care", "url": "https://www.cheshirewestandchester.gov.uk/residents/jobs", "notes": "Council roles may include cleaning, catering, libraries, leisure and support work."}, {"name": "Staffline", "category": "Recruitment agencies", "url": "https://www.staffline.co.uk/jobs", "notes": "Warehouse, production, food manufacturing and temporary assignments."}, {"name": "Blue Arrow", "category": "Recruitment agencies", "url": "https://www.bluearrow.co.uk/", "notes": "Hospitality, catering, cleaning, admin and temporary roles."}, {"name": "The Best Connection", "category": "Recruitment agencies", "url": "https://www.thebestconnection.co.uk/", "notes": "Warehouse, driving, industrial and temporary work."}, {"name": "Pertemps", "category": "Recruitment agencies", "url": "https://www.pertemps.co.uk/", "notes": "Admin, customer service, industrial and temporary jobs."}, {"name": "Manpower", "category": "Recruitment agencies", "url": "https://www.manpower.co.uk/", "notes": "Temporary and permanent vacancies across operations and office support."}, {"name": "Gi Group", "category": "Recruitment agencies", "url": "https://uk.gigroup.com/", "notes": "Industrial, warehouse, production and other temporary roles."}, {"name": "Adecco", "category": "Recruitment agencies", "url": "https://www.adecco.com/", "notes": "General recruitment, temporary assignments and office support."}, {"name": "Proactive Personnel", "category": "Recruitment agencies", "url": "https://www.proactivepersonnel.net/", "notes": "Worth checking for industrial, warehouse and general operative roles."}, {"name": "Meridian Business Support", "category": "Recruitment agencies", "url": "https://www.meridianbs.co.uk/", "notes": "Industrial, manufacturing and logistics recruitment."}, {"name": "Staff 86", "category": "Recruitment agencies", "url": "https://www.staff86.com/", "notes": "Local recruitment option; ask about active Chester hospitality and temporary assignments."}];
+const search = document.getElementById("search");
+const category = document.getElementById("category");
+const list = document.getElementById("employerList");
+const cats = [...new Set(employers.map(e => e.category))];
+cats.forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; category.appendChild(o); });
+document.getElementById("employerCount").textContent = employers.length;
+function esc(v){return String(v).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(){
+ const q=search.value.trim().toLowerCase(),cat=category.value;
+ const found=employers.filter(e=>(cat==="all"||e.category===cat)&&[e.name,e.category,e.notes].join(" ").toLowerCase().includes(q));
+ document.getElementById("resultCount").textContent=`${found.length} of ${employers.length} employers and agencies`;
+ list.innerHTML="";
+ if(!found.length){list.innerHTML='<div class="col-span-full bg-white rounded-xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500">No matches. Try a broader keyword or select all categories.</div>';return;}
+ found.forEach(e=>{const card=document.createElement("article");card.className="card bg-white border border-slate-200 rounded-2xl p-5 flex flex-col";
+ card.innerHTML=`<div class="text-[10px] font-extrabold uppercase tracking-wider text-teal-700">${esc(e.category)}</div><h3 class="mt-2 text-lg font-extrabold text-slate-900">${esc(e.name)}</h3><p class="mt-2 text-sm text-slate-600 leading-relaxed flex-1">${esc(e.notes)}</p><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center justify-center rounded-xl bg-slate-900 hover:bg-teal-700 text-white px-4 py-2.5 text-sm font-bold">Open careers page ↗</a>`;
+ list.appendChild(card);});
+}
+search.addEventListener("input",render);category.addEventListener("change",render);
+document.getElementById("shortcuts").addEventListener("click",e=>{const b=e.target.closest("[data-filter]");if(!b)return;category.value=b.dataset.filter;render();});
+render();
+</script>
 
 
-</body></html>
+
+<script>
+(function(){
+  const dashboardView = document.getElementById("dashboardView");
+  const employersView = document.getElementById("employersView");
+  function showView(which, updateHash=true) {
+    const employers = which === "employers";
+    dashboardView.classList.toggle("hidden", employers);
+    dashboardView.classList.toggle("active", !employers);
+    employersView.classList.toggle("hidden", !employers);
+    employersView.classList.toggle("active", employers);
+    document.querySelectorAll(".page-tab").forEach(btn => {
+      const active = btn.dataset.view === (employers ? "employers" : "dashboard");
+      btn.classList.toggle("bg-teal-600", active);
+      btn.classList.toggle("text-white", active);
+      btn.classList.toggle("text-slate-600", !active);
+      btn.classList.toggle("hover:bg-slate-100", !active);
+    });
+    if (updateHash) history.replaceState(null, "", employers ? "#employers" : "#dashboard");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+  document.addEventListener("click", e => {
+    const button = e.target.closest("[data-view]");
+    if (button) showView(button.dataset.view);
+  });
+  window.addEventListener("hashchange", () => showView(location.hash === "#employers" ? "employers" : "dashboard", false));
+  showView(location.hash === "#employers" ? "employers" : "dashboard", false);
+})();
+</script>
+
+</body>
+</html>
